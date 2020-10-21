@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
-class mainPage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
-  _mainPageState createState() => _mainPageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _mainPageState extends State<mainPage> {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("İlk Syfamız",
+        child: Text("İlk Sayfamız",
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 50,
           color: Colors.blueAccent,
+          fontWeight: FontWeight.bold,
         ),),
       ),
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.white,
     );
   }
 }

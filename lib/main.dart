@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     Future.delayed(Duration(seconds:6),
     (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => mainPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
     }
     );
   }
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
          decoration: BoxDecoration(
            image: DecorationImage(
              image: AssetImage("assets/images/splash_logo.gif"),
-             fit: BoxFit.none,             //fit: BoxFit.cover,
+           //fit: BoxFit.cover,
            )
          ),
        ),
