@@ -13,11 +13,10 @@ class _mainPageState extends State<mainPage> {
         child: Text("İlk Syfamız",
         style: TextStyle(
           fontSize: 20,
-          color: Colors.white
- 
+          color: Colors.blueAccent,
         ),),
       ),
-      backgroundColor: Colors.blue[700],
+      backgroundColor: Colors.white70,
     );
   }
 }
