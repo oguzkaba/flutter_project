@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project/mainPage.dart';
 
 void main() {
-  runApp(MaterialApp(home: MyApp()));
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -11,11 +13,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
+int sayac=6;
 @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds:6),
+    Future.delayed(Duration(seconds:sayac),
     (){
       Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
     }
@@ -25,13 +27,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       body: Container(
-         decoration: BoxDecoration(
-           image: DecorationImage(
-             image: AssetImage("assets/images/splash_logo.gif"),
-           //fit: BoxFit.cover,
-           )
-         ),
+       body: Center(
+             child:Image.asset("assets/images/splash_logo.gif",width: MediaQuery.of(context).size.width*.5,)
        ),
     );
   }
