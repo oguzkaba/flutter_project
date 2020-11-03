@@ -1,35 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/mainPage.dart';
+import 'package:flutter_project/pages/about.dart';
+import 'package:flutter_project/pages/login.dart';
+import 'package:flutter_project/pages/home.dart';
+import 'package:flutter_project/pages/settings.dart';
+
+var routes = <String, WidgetBuilder>{
+  "pages/home": (BuildContext context) => HomePage(),
+  "pages/about": (BuildContext context) => AboutPage(),
+  "pages/settings": (BuildContext context) => SettingsPage(),
+};
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: MyApp()));
-}
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState  createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-int sayac=6;
-@override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds:sayac),
-    (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
-    }
+    home: LoginPage(),
+    routes: routes,
+    theme: ThemeData.dark()
+      //primaryColor: Colors.blueGrey,
+    ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-       body: Center(
-             child:Image.asset("assets/images/splash_logo.gif",width: MediaQuery.of(context).size.width*.5,)
-       ),
-    );
-  }
 }
+
+
+

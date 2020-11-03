@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
-class MainPage extends StatefulWidget {
+class AboutPage extends StatefulWidget {
   @override
-  _MainPageState createState() => _MainPageState();
+  _AboutPageState createState() => _AboutPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('About Page'),
+      ),
       body: Center(
-        child: Text("İlk Sayfamız",
+        child: Text('About Page',
         style: TextStyle(
           fontSize: 50,
           color: Colors.blueAccent,

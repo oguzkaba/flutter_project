@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="387" height="98" viewBox="0 0 387 98">
+  <g id="Group_2" data-name="Group 2" transform="translate(-319 -101)">
+    <g id="Group_1" data-name="Group 1" transform="translate(0 1)">
+      <g id="Ellipse_1" data-name="Ellipse 1" transform="translate(336 137)" stroke="#000" stroke-width="1">
+        <circle cx="22" cy="22" r="22" stroke="none"/>
+        <circle cx="22" cy="22" r="21.5" fill="none"/>
+      </g>
+      <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(344 145)" fill="none" stroke="#0090f8" stroke-width="3">
+        <circle cx="14" cy="14" r="14" stroke="none"/>
+        <circle cx="14" cy="14" r="12.5" fill="none"/>
+      </g>
+      <line id="Line_1" data-name="Line 1" y1="44" transform="translate(358 137)" fill="none" stroke="#0090f8" stroke-width="3"/>
+      <line id="Line_2" data-name="Line 2" x2="44" transform="translate(336 159)" fill="none" stroke="#0090f8" stroke-width="3"/>
+    </g>
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(319 121)" fill="none" stroke="#000" stroke-width="8">
+      <circle cx="39" cy="39" r="39" stroke="none"/>
+      <circle cx="39" cy="39" r="35" fill="none"/>
+    </g>
+    <text id="NESYSTEM" transform="translate(397 182)" fill="#a6a6a6" font-size="55" font-family="SegoeUIBlack, Segoe UI" letter-spacing="0.05em"><tspan x="0" y="0" fill="#000">NE</tspan><tspan y="0" fill="#a6a6a6" font-family="SegoeUI-Semibold, Segoe UI" font-weight="600" letter-spacing="0.1em">SYSTEM</tspan></text>
+    <text id="TRACKING" transform="translate(397 133)" font-size="30" font-family="SegoeUI-Semilight, Segoe UI" font-weight="300" letter-spacing="0.1em"><tspan x="0" y="0">TRACKING</tspan></text>
+  </g>
+</svg>
