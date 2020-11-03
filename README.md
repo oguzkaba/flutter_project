@@ -1,6 +1,8 @@
 # flutter_project
 
-A new Flutter project.
+<p align="center">
+  <img src="assets/images/splash_logo.gif">
+</p>
 
 ## Getting Started
 
