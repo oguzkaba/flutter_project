@@ -25,28 +25,28 @@ class TextFieldWidget extends StatelessWidget {
     return TextField(
       onChanged: onChanged,
       obscureText: obscureText,
-      cursorColor: Global.mediumBlue,
+      cursorColor: Global.focusedBlue,
       style: TextStyle(
-        color: Global.mediumBlue,
+        color: Global.lightBGrey,
         fontSize: 16.0,
       ),
       decoration: InputDecoration(
-        labelStyle: TextStyle(color: Global.mediumBlue,fontSize: 20.0),
-        focusColor: Global.mediumBlue,
+        labelStyle: TextStyle(color: Global.primaryBGrey,fontSize: 20.0),
+        focusColor: Global.focusedBlue,
         filled: true,
         enabledBorder: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: Global.primaryBGrey,width: 1.3),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Global.mediumBlue),
+          borderSide: BorderSide(color: Global.focusedBlue, width: 1.3),
         ),
         labelText: hintText,
         prefixIcon: Icon(
           prefixIconData,
           size: 30,
-          color: Global.mediumBlue,
+          color: Global.darkBGrey,
         ),
         suffixIcon: GestureDetector(
           onTap: () {
@@ -54,8 +54,8 @@ class TextFieldWidget extends StatelessWidget {
           },
           child: Icon(
             suffixIconData,
-            size: 30,
-            color: Global.mediumBlue,
+            size: 20,
+            color: Global.lightBGrey,
           ),
         ),
       ),

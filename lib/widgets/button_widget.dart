@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/main.dart';
-import 'package:flutter_project/models/my_navigator.dart';
 import 'package:flutter_project/models/globals.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -18,12 +16,14 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Ink(
+        height: 50.0,
+        width: MediaQuery.of(context).size.width*.225,
         decoration: BoxDecoration(
-          color: hasBorder ? Global.white : Global.mediumBlue,
+          color: hasBorder ? Global.darkRed : Global.darkBGrey,
           borderRadius: BorderRadius.circular(10),
           border: hasBorder
               ? Border.all(
-                  color: Global.mediumBlue,
+                  color: Global.darkRed,
                   width: 1.0,
                 )
               : Border.fromBorderSide(BorderSide.none),
@@ -37,7 +37,7 @@ class ButtonWidget extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: hasBorder ? Global.mediumBlue : Global.white,
+                  color:Global.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 20.0,
                 ),
