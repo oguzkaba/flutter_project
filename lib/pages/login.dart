@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Global.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
@@ -45,7 +45,6 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               width: size_width * .5,
-              //color: Global.white,
               child: Column(
                 children: [
                   Padding(
@@ -58,15 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                             Image.asset(
                               'assets/images/logo_full_low_height.png',
                               height: 60,
-                            ),
-                            /*Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),*/
+                            ),           
                           ],
                         ),
                       ],
@@ -189,3 +180,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+
