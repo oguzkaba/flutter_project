@@ -9,6 +9,7 @@ class TextFieldWidget extends StatelessWidget {
   final IconData suffixIconData;
   final bool obscureText;
   final Function onChanged;
+  final TextEditingController controller;
 
   TextFieldWidget({
     this.hintText,
@@ -16,6 +17,7 @@ class TextFieldWidget extends StatelessWidget {
     this.suffixIconData,
     this.obscureText,
     this.onChanged,
+    this.controller
   });
 
   @override
@@ -23,6 +25,7 @@ class TextFieldWidget extends StatelessWidget {
     final model = Provider.of<LoginModel>(context);
 
     return TextField(
+      controller: controller,
       onChanged: onChanged,
       obscureText: obscureText,
       cursorColor: Global.focusedBlue,

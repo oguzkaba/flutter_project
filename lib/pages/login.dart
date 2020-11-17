@@ -19,7 +19,8 @@ class _LoginPageState extends State<LoginPage> {
     final size_width = MediaQuery.of(context).size.width;
     // final  bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     final model = Provider.of<LoginModel>(context);
-
+    TextEditingController value = TextEditingController();
+    TextEditingController password = TextEditingController();
     return SafeArea(
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
@@ -27,8 +28,24 @@ class _LoginPageState extends State<LoginPage> {
         body: Center(
           child: SingleChildScrollView(
             child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
               width: size_width * .5,
-              color: Global.white,
+              //color: Global.white,
               child: Column(
                 children: [
                   Padding(
@@ -61,13 +78,14 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         TextFieldWidget(
+                          controller: value,
                           hintText: 'Username',
                           obscureText: false,
                           prefixIconData: Icons.person,
-                          suffixIconData: model.isValid ? Icons.check : null,
-                          onChanged: (value) {
+                          //suffixIconData: model.isValid ? Icons.check : null,
+                          /*onChanged: (value) {
                             model.isValidUsername(value);
-                          },
+                          },*/
                         ),
                         SizedBox(
                           height: 20.0,
@@ -76,12 +94,13 @@ class _LoginPageState extends State<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             TextFieldWidget(
+                              controller: password,
                               hintText: 'Password',
                               obscureText: model.isVisible ? false : true,
                               prefixIconData: Icons.lock,
-                              suffixIconData: model.isVisible
+                              /*suffixIconData: model.isVisible
                                   ? Icons.visibility
-                                  : Icons.visibility_off,
+                                  : Icons.visibility_off,*/
                             ),
                             SizedBox(
                               height: 20.0,
@@ -101,7 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ButtonWidget(
-                              onClick: () => MyNavigator.goToHome(context),
+                              onClick: () {
+                                print(value.text + ' ' + password.text);
+                              }, //MyNavigator.goToHome(context),
                               title: 'Login',
                               hasBorder: false,
                             ),
