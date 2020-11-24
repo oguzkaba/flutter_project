@@ -3,43 +3,45 @@ import 'package:flutter_project/models/globals.dart';
 import 'package:flutter_project/models/login_model.dart';
 import 'package:provider/provider.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextFormFieldWidget extends StatelessWidget {
   final String hintText;
   final IconData prefixIconData;
   final IconData suffixIconData;
   final bool obscureText;
+  final bool focus;
   final Function onChanged;
-  final TextEditingController controller;
+  final Function validator;
 
-  TextFieldWidget({
-    this.hintText,
-    this.prefixIconData,
-    this.suffixIconData,
-    this.obscureText,
-    this.onChanged,
-    this.controller
-  });
+  TextFormFieldWidget(
+      {this.hintText,
+      this.prefixIconData,
+      this.suffixIconData,
+      this.obscureText,
+      this.onChanged,
+      this.focus,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<LoginModel>(context);
 
-    return TextField(
-      controller: controller,
+    return TextFormField(
+      autofocus: focus,
+      validator: validator,
       onChanged: onChanged,
       obscureText: obscureText,
       cursorColor: Global.focusedBlue,
       style: TextStyle(
-        color: Global.lightBGrey,
+        color: Global.dark,
         fontSize: 16.0,
       ),
       decoration: InputDecoration(
-        labelStyle: TextStyle(color: Global.primaryBGrey,fontSize: 20.0),
+        labelStyle: TextStyle(color: Global.dark, fontSize: 20.0),
         focusColor: Global.focusedBlue,
         filled: true,
         enabledBorder: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Global.primaryBGrey,width: 1.3),
+          borderSide: BorderSide(color: Global.dark, width: 1.3),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -49,7 +51,7 @@ class TextFieldWidget extends StatelessWidget {
         prefixIcon: Icon(
           prefixIconData,
           size: 30,
-          color: Global.darkBGrey,
+          color: Global.dark,
         ),
         suffixIcon: GestureDetector(
           onTap: () {
@@ -58,7 +60,7 @@ class TextFieldWidget extends StatelessWidget {
           child: Icon(
             suffixIconData,
             size: 20,
-            color: Global.lightBGrey,
+            color: Global.light,
           ),
         ),
       ),

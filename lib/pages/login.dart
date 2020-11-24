@@ -5,7 +5,7 @@ import 'package:flutter_project/models/globals.dart';
 import 'package:flutter_project/models/login_model.dart';
 import 'package:flutter_project/models/my_navigator.dart';
 import 'package:flutter_project/widgets/button_widget.dart';
-import 'package:flutter_project/widgets/textfield_widget.dart';
+import 'package:flutter_project/widgets/textformfield_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,15 +16,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    final size_width = MediaQuery.of(context).size.width;
+    final sizeWidth = MediaQuery.of(context).size.width;
     // final  bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     final model = Provider.of<LoginModel>(context);
-    TextEditingController value = TextEditingController();
-    TextEditingController password = TextEditingController();
     return SafeArea(
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
-        backgroundColor: Global.darkWhite,
+        backgroundColor: Global.white,
         body: Center(
           child: SingleChildScrollView(
             child: Container(
@@ -44,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              width: size_width * .5,
+              width: sizeWidth * .5,
               child: Column(
                 children: [
                   Padding(
@@ -57,85 +55,111 @@ class _LoginPageState extends State<LoginPage> {
                             Image.asset(
                               'assets/images/logo_full_low_height.png',
                               height: 60,
-                            ),           
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextFieldWidget(
-                          controller: value,
-                          hintText: 'Username',
-                          obscureText: false,
-                          prefixIconData: Icons.person,
-                          //suffixIconData: model.isValid ? Icons.check : null,
-                          /*onChanged: (value) {
-                            model.isValidUsername(value);
-                          },*/
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            TextFieldWidget(
-                              controller: password,
-                              hintText: 'Password',
-                              obscureText: model.isVisible ? false : true,
-                              prefixIconData: Icons.lock,
-                              /*suffixIconData: model.isVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,*/
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Text(
-                              'Forgot password?',
-                              style: TextStyle(
-                                color: Global.darkBGrey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ButtonWidget(
-                              onClick: () {
-                                print(value.text + ' ' + password.text);
-                              }, //MyNavigator.goToHome(context),
-                              title: 'Login',
-                              hasBorder: false,
-                            ),
-                            SizedBox(
-                              width: 20.0,
-                            ),
-                            ButtonWidget(
-                              onClick: () => _showMyDialog(),
-                              title: 'Exit',
-                              hasBorder: true,
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
+                  buildFormLogin(model, context),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Form buildFormLogin(
+      // GlobalKey<FormState> _formKey,
+      LoginModel model,
+      BuildContext context) {
+    return Form(
+      key: model.formKey,
+      // ignore: deprecated_member_use
+      autovalidate: model.autoValidate,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            buildTextFormFieldWidget_username(model),
+            SizedBox(
+              height: 20.0,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                buildTextFormFieldWidget_pass(model),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  'Forgot password?',
+                  style: TextStyle(
+                    color: Global.dark,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonWidget(
+                  onClick: () {
+                    if (model.formKey.currentState.validate()) {
+                      model.formKey.currentState.save();
+                      MyNavigator.goToHome(context,model.uname);
+                      print('Sign in successfully');
+                    } else {
+                      model.autoValidate = true;
+                      print('Failed to sign in');
+                    }
+                  },
+                  title: 'Login',
+                  hasBorder: false,
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                ButtonWidget(
+                  onClick: () => _showMyDialog(),
+                  title: 'Exit',
+                  hasBorder: true,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  TextFormFieldWidget buildTextFormFieldWidget_username(LoginModel model) {
+    return TextFormFieldWidget(
+      focus: true,
+      hintText: 'Username',
+      obscureText: false,
+      prefixIconData: Icons.person,
+      //*suffixIconData: model.isValid ? Icons.check : null,//TODO- username sağ tik
+      validator: model.validateUname,
+      onChanged: (value) => model.onSavedUname(value),
+    );
+  }
+
+  TextFormFieldWidget buildTextFormFieldWidget_pass(LoginModel model) {
+    return TextFormFieldWidget(
+      focus: false,
+      hintText: 'Password',
+      obscureText: model.isVisible ? false : true,
+      prefixIconData: Icons.lock,
+      suffixIconData: model.isVisible ? Icons.visibility : Icons.visibility_off,
+      validator: model.validatePassword,
+      onChanged: (value) => model.onSavedPassword(value),
     );
   }
 
@@ -146,12 +170,18 @@ class _LoginPageState extends State<LoginPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Exit'),
-          titleTextStyle: TextStyle(color: Global.darkRed, fontSize: 20),
+          titleTextStyle: TextStyle(color: Global.dark_red, fontSize: 30),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Close the application.'),
-                Text('Would you like to approve of this message?'),
+                Text(
+                  'Close the application.',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  'Would you like to approve of this message?',
+                  style: TextStyle(fontSize: 20),
+                ),
               ],
             ),
           ),
@@ -159,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               child: Text(
                 'OK',
-                style: TextStyle(color: Global.darkRed),
+                style: TextStyle(color: Global.dark_red, fontSize: 20),
               ),
               onPressed: () {
                 exit(0);
@@ -168,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               child: Text(
                 'CANCEL',
-                style: TextStyle(color: Global.darkBGrey),
+                style: TextStyle(color: Global.dark, fontSize: 20),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -180,6 +210,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project/pages/about.dart';
 import 'package:flutter_project/pages/login.dart';
 import 'package:flutter_project/pages/home.dart';
@@ -12,10 +13,13 @@ var routes = <String, WidgetBuilder>{
   "pages/settings": (BuildContext context) => SettingsPage(),
 };
 void main() => runApp(MyApp());
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
     return ChangeNotifierProvider(
       create: (context) => LoginModel(),
       child: MaterialApp(
@@ -25,17 +29,10 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-/*void main() {
-  runApp(MaterialApp(
-    create: (context) => LoginModel(),
-    debugShowCheckedModeBanner: false,
-    home: LoginPage(),
-    routes: routes,
-    theme: ThemeData.dark()
-      //primaryColor: Colors.blueGrey,
-    ),
-    );*/
 }
 
 
+    
+    
+  
 

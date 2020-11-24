@@ -1,26 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'globals.dart';
 
-class LoginModel extends ChangeNotifier {
-  get isVisible => _isVisible;
+class LoginModel with ChangeNotifier {
+  String _uname;
+  String _password;
+  final formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
   bool _isVisible = false;
-  set isVisible(value) {
+
+  String get uname => _uname;
+  String get password => _password;
+  bool get autoValidate => _autoValidate;
+  bool get isVisible => _isVisible;
+
+  void set autoValidate(bool value) {
+    _autoValidate = value;
+    notifyListeners();
+  }
+
+  void set isVisible(bool value) {
     _isVisible = value;
     notifyListeners();
   }
 
-  get isValid => _isValid;
-  bool _isValid = false;
-  void isValidUsername(String input) {
-    for(var i=0;i<Global.validEmail.length;i++){
-      if (input == Global.validEmail[i]) {
-        _isValid = true;
-      } else {
-        _isValid = false;
-      }
-       
+  void onSavedUname(String unameStr) {
+    _uname = unameStr;
+    notifyListeners();
+  }
+
+  void onSavedPassword(String passwordStr) {
+    _password = passwordStr;
+    notifyListeners();
+  }
+
+  String validateUname(String value) {
+    if (value.length == 0) {
+      return 'Please fill username';
+    } else if (value.length < 6) {
+      return 'Username must be 6 length character';
+    } else {
+      return null;
     }
-  notifyListeners();   
+  }
+
+  String validatePassword(String value) {
+    if (value.length == 0) {
+      return 'Please fill password';
+    } else if (value.length < 6) {
+      return 'Password must be 6 length character';
+    }else {
+      return null;
+    }
   }
 }

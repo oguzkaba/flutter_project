@@ -1,108 +1,65 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_project/models/globals.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-Color primaryColor = Colors.blueGrey;
-List _menuTabTitle = [
-  'MAIN',
-  'APPROVAL',
-  'MATERIALS',
-  'NDT',
-  'RELEASE',
-  'SHIP'
-];
-
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 6,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: primaryColor,
-            title: Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              // child: _oneSystemAppbar(),
-            ),
-            actions: [
-              TabBar(
-                isScrollable: true,
-                indicatorColor: Colors.white,
-                indicatorWeight: 6.0,
-                onTap: (index) {
-                  setState(() {
-                    switch (index) {
-                      case 0:
-                        primaryColor = Colors.blueGrey;
-                        break;
-                      case 1:
-                        primaryColor = Color(0xff3f51b5);
-                        break;
-                      case 2:
-                        primaryColor = Color(0xffe91e63);
-                        break;
-                      case 3:
-                        primaryColor = Color(0xff9c27b0);
-                        break;
-                      case 4:
-                        primaryColor = Color(0xff2196f3);
-                        break;
-                      case 5:
-                        primaryColor = Colors.brown[600];
-                        break;
-                      default:
-                    }
-                  });
-                },
-                tabs: List.generate(_menuTabTitle.length, (index) {
-                  return Tab(
-                    child: Container(
-                      child: Text(
-                        _menuTabTitle[index].toString(),
-                        style: TextStyle(color: Colors.white, fontSize: 18.0),
-                      ),
-                    ),
-                  );
-                }),
+    final username = ModalRoute.of(context).settings.arguments;
+    final sizeWidth = MediaQuery.of(context).size.width;
+    final sizeHeight = MediaQuery.of(context).size.height;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Global.full_light,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu, size: 40), // change this size and style
+                onPressed: () => Scaffold.of(context).openDrawer(),
               ),
+            ),
+            iconTheme: IconThemeData(color: Global.medium, size: 40),
+            backgroundColor: Global.white,
+            title: Text('ONESystem',style: TextStyle(color: Global.dark)),
+            actions: [
+              CircleAvatar(
+                backgroundColor: Global.medium,
+                //backgroundImage: ExactAssetImage('assets/images/logo_min_home.png'),
+                foregroundColor:Global.dark ,
+              ),
+              SizedBox(width: 16),
+              Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Welcome: ' + username,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Global.dark),
+                  )),
+              SizedBox(width: 16),
             ],
           ),
-        ));
+        ),
+        body: Center(
+          child: Container(
+            width: sizeWidth * .95,
+            height: sizeHeight * .8,
+            color: Global.white,
+          ),
+        ),
+        drawer: Drawer(
+          child: Container(
+            color: Global.medium,
+          ),
+        ),
+      ),
+    );
   }
-}
-
-Widget _oneSystemAppbar() {
-  return Container(
-    color: Colors.white,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Container(
-          child: IconButton(
-            icon: Icon(FontAwesomeIcons.bars),
-            onPressed: null,
-          ),
-        ),
-        Container(
-          child: Text(
-            'Search Area...',
-            style: TextStyle(color: Colors.grey),
-          ),
-        ),
-        Container(
-          child: IconButton(
-              icon: Icon(
-                FontAwesomeIcons.microphone,
-                color: Colors.blueGrey,
-              ),
-              onPressed: null),
-        ),
-      ],
-    ),
-  );
 }
