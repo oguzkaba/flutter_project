@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_project/pages/about.dart';
 import 'package:flutter_project/pages/login.dart';
 import 'package:flutter_project/pages/home.dart';
+import 'package:flutter_project/pages/login_help.dart';
+import 'package:flutter_project/pages/release.dart';
 import 'package:flutter_project/pages/settings.dart';
 import 'package:provider/provider.dart';
 import 'models/login_model.dart';
@@ -11,6 +13,7 @@ var routes = <String, WidgetBuilder>{
   "pages/home": (BuildContext context) => HomePage(),
   "pages/about": (BuildContext context) => AboutPage(),
   "pages/settings": (BuildContext context) => SettingsPage(),
+  "pages/login_help": (BuildContext context) => LoginHelpPage(),
 };
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {

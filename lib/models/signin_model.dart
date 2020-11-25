@@ -1,8 +1,9 @@
 class SigninModel {
   int id;
-  String ders;
-  String ogretmen;
-  String donem;
+  String name;
+  String password;
+  int role;
+  bool isLogin;
 
-  SigninModel(this.id, this.ders, this.ogretmen, this.donem);
+  SigninModel(this.id, this.name, this.password, this.role,this.isLogin);
 }

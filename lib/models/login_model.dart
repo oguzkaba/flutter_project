@@ -13,6 +13,7 @@ class LoginModel with ChangeNotifier {
   bool get autoValidate => _autoValidate;
   bool get isVisible => _isVisible;
 
+
   void set autoValidate(bool value) {
     _autoValidate = value;
     notifyListeners();
@@ -40,16 +41,17 @@ class LoginModel with ChangeNotifier {
       return 'Username must be 6 length character';
     } else {
       return null;
+      }
     }
-  }
-
+  
   String validatePassword(String value) {
     if (value.length == 0) {
       return 'Please fill password';
     } else if (value.length < 6) {
       return 'Password must be 6 length character';
-    }else {
+    } else {
       return null;
     }
-  }
+    }
+
 }

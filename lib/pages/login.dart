@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/data/database_helper.dart';
 import 'package:flutter_project/models/globals.dart';
 import 'package:flutter_project/models/login_model.dart';
 import 'package:flutter_project/models/my_navigator.dart';
@@ -14,14 +15,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  DatabaseOperations _operations = new DatabaseOperations();
+  String name, pass;
   @override
   Widget build(BuildContext context) {
     final sizeWidth = MediaQuery.of(context).size.width;
-    // final  bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     final model = Provider.of<LoginModel>(context);
+    // final  bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return SafeArea(
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
         backgroundColor: Global.white,
         body: Center(
           child: SingleChildScrollView(
@@ -71,10 +73,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Form buildFormLogin(
-      // GlobalKey<FormState> _formKey,
-      LoginModel model,
-      BuildContext context) {
+  Form buildFormLogin(LoginModel model, BuildContext context) {
     return Form(
       key: model.formKey,
       // ignore: deprecated_member_use
@@ -110,14 +109,27 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ButtonWidget(
-                  onClick: () {
+                  onClick: () async {
                     if (model.formKey.currentState.validate()) {
                       model.formKey.currentState.save();
-                      MyNavigator.goToHome(context,model.uname);
-                      print('Sign in successfully');
-                    } else {
-                      model.autoValidate = true;
-                      print('Failed to sign in');
+                      bool process = await _operations.loginQuery(
+                          name: model.uname, pass: model.password);
+                      print('durum' + process.toString());
+                      if (process) {
+                        MyNavigator.goToHome(context, model.uname);
+                        print('Sign in successfully' + process.toString());
+                      } else {
+                        model.autoValidate = true;
+                        print('Failed to sign in');
+                        _showMyDialog(
+                          'Warning',
+                          'Username or password  is wrong.',
+                          'Or not registered in the system',
+                          'HELP',
+                          'OK',
+                          () {MyNavigator.gotoLoginHelp(context);},
+                        );
+                      }
                     }
                   },
                   title: 'Login',
@@ -127,7 +139,16 @@ class _LoginPageState extends State<LoginPage> {
                   width: 20.0,
                 ),
                 ButtonWidget(
-                  onClick: () => _showMyDialog(),
+                  onClick: () => _showMyDialog(
+                    'Exit',
+                    'Close the application.',
+                    'Would you like to approve of this message?',
+                    'OK',
+                    'CANCEL',
+                    () {
+                      exit(0);
+                    },
+                  ),
                   title: 'Exit',
                   hasBorder: true,
                 ),
@@ -163,23 +184,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showMyDialog(
+      title, text1, text2, tbtn1, tbtn2, Function onPressed) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Exit'),
+          title: Text(title),
           titleTextStyle: TextStyle(color: Global.dark_red, fontSize: 30),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  'Close the application.',
+                  text1,
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  'Would you like to approve of this message?',
+                  text2,
                   style: TextStyle(fontSize: 20),
                 ),
               ],
@@ -188,16 +210,14 @@ class _LoginPageState extends State<LoginPage> {
           actions: <Widget>[
             TextButton(
               child: Text(
-                'OK',
+                tbtn1,
                 style: TextStyle(color: Global.dark_red, fontSize: 20),
               ),
-              onPressed: () {
-                exit(0);
-              },
+              onPressed: onPressed,
             ),
             TextButton(
               child: Text(
-                'CANCEL',
+                tbtn2,
                 style: TextStyle(color: Global.dark, fontSize: 20),
               ),
               onPressed: () {

@@ -83,28 +83,28 @@ class _VERIEKLEState extends State<VERIEKLE> {
               SizedBox(
                 height: 20,
               ),
-              RaisedButton(
-                onPressed: () async {
-                  bool sonuc;
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+              // RaisedButton(
+              //   onPressed: () async {
+              //     bool sonuc;
+              //     if (_formKey.currentState.validate()) {
+              //       _formKey.currentState.save();
 
-                    sonuc = await _database.veriEkle(
-                        ders: ders, ogretmen: ogretmen, donem: donem);
-                    print(sonuc);
-                    if (sonuc) {
-                      Navigator.pop(context, true);
-                    } else {
-                      snackbarGoster(
-                        "Kayıt Eklemede Hata Oluştu. İnternet Bağlantınızı Kontrol Ediniz.",
-                      );
-                    }
-                  }
+              //       sonuc = await _database.veriEkle(
+              //           ders: ders, ogretmen: ogretmen, donem: donem);
+              //       print(sonuc);
+              //       if (sonuc) {
+              //         Navigator.pop(context, true);
+              //       } else {
+              //         snackbarGoster(
+              //           "Kayıt Eklemede Hata Oluştu. İnternet Bağlantınızı Kontrol Ediniz.",
+              //         );
+              //       }
+              //     }
 
-                  print("ders: $ders , ogretmen: $ogretmen , donem: $donem");
-                },
-                child: Text("Ekle"),
-              ),
+              //     print("ders: $ders , ogretmen: $ogretmen , donem: $donem");
+              //   },
+              //   child: Text("Ekle"),
+              // ),
               SizedBox(
                 height: 40,
               ),

@@ -12,4 +12,8 @@ class MyNavigator {
   static void goToSettings(BuildContext context) {
     Navigator.pushNamed(context, "pages/settings");
   }
+
+   static void gotoLoginHelp(BuildContext context) {
+    Navigator.pushNamed(context, "pages/login_help");
+  }
 }

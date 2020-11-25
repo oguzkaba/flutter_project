@@ -20,7 +20,6 @@ class _VERILISTESIState extends State<VERILISTESI> {
   void initState() {
     super.initState();
     verileriGetir();
-  
   }
 
   @override
@@ -58,26 +57,26 @@ class _VERILISTESIState extends State<VERILISTESI> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: ListTile(
-                        title: Text(tumVeriler[index].ders +
+                        title: Text(tumVeriler[index].name +
                             " " +
-                            tumVeriler[index].ogretmen),
+                            tumVeriler[index].password),
                         subtitle:
-                            Text("Dönem : " + tumVeriler[index].donem),
+                            Text("Dönem : " + tumVeriler[index].role.toString()),
                         leading: Text(tumVeriler[index].id.toString()),
-                        trailing: IconButton(
-                            tooltip: "Kişiyi Sil",
-                            icon: Icon(Icons.delete),
-                            onPressed: () async {
-                              //silme kodu
-                              bool sonuc = await _operations.veriSil(
-                                  id: tumVeriler[index].id);
-                              if (sonuc) {
-                                setState(() {
-                                  snackbarGoster("Kayıt silindi");
-                                  verileriGetir();
-                                });
-                              }
-                            }),
+                        // trailing: IconButton(
+                        //     tooltip: "Kişiyi Sil",
+                        //     icon: Icon(Icons.delete),
+                        //     onPressed: () async {
+                        //       //silme kodu
+                        //       bool sonuc = await _operations.veriSil(
+                        //           id: tumVeriler[index].id);
+                        //       if (sonuc) {
+                        //         setState(() {
+                        //           snackbarGoster("Kayıt silindi");
+                        //           verileriGetir();
+                        //         });
+                        //       }
+                        //     }),
                       ),
                     );
                   })
@@ -90,7 +89,7 @@ class _VERILISTESIState extends State<VERILISTESI> {
   }
 
   void verileriGetir() async {
-    tumVeriler = await _operations.verileriGetir();
+    //tumVeriler = await _operations.verileriGetir();
     setState(() {});
 
     /* _databaseislemleri.verileriGetir().then((value) {
