@@ -15,10 +15,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String name, password;
   bool login;
+
   @override
   void initState() {
-    super.initState();
     checkIsLogin();
+    getUserName().then((value) => {
+          setState(() {
+            name = value;
+          }),
+        });
+    super.initState();
   }
 
   void checkIsLogin() async {
@@ -30,15 +36,11 @@ class _HomePageState extends State<HomePage> {
       // return null;
       name = await getUserName();
     }
-
-    setState(() {
-      name = name;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final username = ModalRoute.of(context).settings.arguments;
+    //final username = ModalRoute.of(context).settings.arguments;
     final model = Provider.of<LoginModel>(context);
     final sizeWidth = MediaQuery.of(context).size.width;
     final sizeHeight = MediaQuery.of(context).size.height;
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Welcome: ' + name,
+                    name == null ? 'Welcome: Guest' : 'Welcome: ' + name,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -135,7 +137,16 @@ class _HomePageState extends State<HomePage> {
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       print('çıkış hatası');
-      //Fluttertoast.showToast(msg: 'exit_warning');
+      setState(() {
+        Fluttertoast.showToast(
+            msg: "Double click to exit...",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Global.dark_red,
+            textColor: Global.white,
+            fontSize: 20.0);
+      });
       return Future.value(false);
     }
     return Future.value(true);
