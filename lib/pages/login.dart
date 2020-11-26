@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/data/database_helper.dart';
+import 'package:flutter_project/data/shared_pref_func.dart';
 import 'package:flutter_project/models/globals.dart';
 import 'package:flutter_project/models/login_model.dart';
 import 'package:flutter_project/models/my_navigator.dart';
@@ -17,11 +18,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   DatabaseOperations _operations = new DatabaseOperations();
   String name, pass;
+  bool checkVal = false;
   @override
   Widget build(BuildContext context) {
     final sizeWidth = MediaQuery.of(context).size.width;
     final model = Provider.of<LoginModel>(context);
-    // final  bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Global.white,
@@ -92,18 +94,52 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 buildTextFormFieldWidget_pass(model),
                 SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
-                Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                    color: Global.dark,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Theme(
+                          data: ThemeData(unselectedWidgetColor: Global.dark),
+                          child: Checkbox(
+                            activeColor: Global.dark,
+                            value: checkVal,
+                            onChanged: (bool value) {
+                              setState(() {
+                                checkVal = value;
+                                model.isRemember = checkVal;
+                              });
+                            },
+                          ),
+                        ),
+                        Text(
+                          'Remember Me?',
+                          style: TextStyle(
+                              color: Global.dark,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    FlatButton(
+                      onPressed: () {},
+                      textColor: Global.dark,
+                      child: Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                            color: Global.dark,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
             SizedBox(
-              height: 20.0,
+              height: 10.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -116,10 +152,14 @@ class _LoginPageState extends State<LoginPage> {
                           name: model.uname, pass: model.password);
                       print('durum' + process.toString());
                       if (process) {
-                        MyNavigator.goToHome(context, model.uname);
+                        //MyNavigator.goToHome(context, model.uname);//with arguments
+                        MyNavigator.goToHome(context);
                         print('Sign in successfully' + process.toString());
+                        model.isLogin = true;
+                        setLogin(model.uname);
                       } else {
                         model.autoValidate = true;
+                        model.isLogin = false;
                         print('Failed to sign in');
                         _showMyDialog(
                           'Warning',
@@ -127,7 +167,9 @@ class _LoginPageState extends State<LoginPage> {
                           'Or not registered in the system',
                           'HELP',
                           'OK',
-                          () {MyNavigator.gotoLoginHelp(context);},
+                          () {
+                            MyNavigator.gotoLoginHelp(context);
+                          },
                         );
                       }
                     }
@@ -136,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                   hasBorder: false,
                 ),
                 SizedBox(
-                  width: 20.0,
+                  width: 50.0,
                 ),
                 ButtonWidget(
                   onClick: () => _showMyDialog(

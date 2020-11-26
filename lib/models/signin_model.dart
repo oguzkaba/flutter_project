@@ -3,7 +3,6 @@ class SigninModel {
   String name;
   String password;
   int role;
-  bool isLogin;
 
-  SigninModel(this.id, this.name, this.password, this.role,this.isLogin);
+  SigninModel(this.id, this.name, this.password, this.role);
 }

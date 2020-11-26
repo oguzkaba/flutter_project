@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/models/teheme_provider.dart';
+import 'package:provider/provider.dart';
 
-class SettingsPage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<SettingsPage> {
+class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Application Settings'),
+        title: Text("Theme Switcher"),
       ),
-      body: Center(
-        child: Text('Settings Page',
-        style: TextStyle(
-          fontSize: 50,
-          color: Colors.blueAccent,
-          fontWeight: FontWeight.bold,
-        ),),
-      ),
-      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Consumer<ThemeNotifier>(
+                builder:(context, notifier, child) => 
+                  SwitchListTile(
+                    title: Text("Dark Mode"),
+                    onChanged:(value){
+                      notifier.toggleTheme();
+                  } ,
+                  value: notifier.darkTheme ,
+              ),
+            ),
+
+            Card(
+              child: ListTile(
+                title: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
+              ),
+            ),
+          ]
+        ),
+      )
     );
   }
 }

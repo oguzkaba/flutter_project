@@ -90,7 +90,7 @@ class _VERILISTESIState extends State<VERILISTESI> {
 
   void verileriGetir() async {
     //tumVeriler = await _operations.verileriGetir();
-    setState(() {});
+    //setState(() {});
 
     /* _databaseislemleri.verileriGetir().then((value) {
      
