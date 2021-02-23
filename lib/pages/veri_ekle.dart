@@ -1,15 +1,14 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/data/database_helper.dart';
-import 'package:flutter_project/models/signin_model.dart';
 
-/* Code by avdisx */
 class VERIEKLE extends StatefulWidget {
   @override
   _VERIEKLEState createState() => _VERIEKLEState();
 }
 
 class _VERIEKLEState extends State<VERIEKLE> {
+  // ignore: unused_field
   DatabaseOperations _database = new DatabaseOperations();
   String ders, ogretmen, donem;
   var _formKey = GlobalKey<FormState>();
@@ -35,6 +34,7 @@ class _VERIEKLEState extends State<VERIEKLE> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30)),
                 ),
+                // ignore: missing_return
                 validator: (value) {
                   if (value.length < 3) {
                     return "En az 3 harf";
@@ -54,6 +54,7 @@ class _VERIEKLEState extends State<VERIEKLE> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30)),
                 ),
+                // ignore: missing_return
                 validator: (value) {
                   if (value.length < 3) {
                     return "En az 3 harf";
@@ -73,6 +74,7 @@ class _VERIEKLEState extends State<VERIEKLE> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30)),
                 ),
+                // ignore: missing_return
                 validator: (value) {
                   if (value.length < 1) {
                     return "En az 1 değer";

@@ -3,9 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<bool> getLogin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (prefs.containsKey('name')) {
-    return await true;
+    return true;
   } else {
-    return await false;
+    return false;
   }
 }
 
@@ -30,7 +30,7 @@ void setDarkThemeChoice(bool value) async {
 Future <bool> getDarkThemeChoice() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if(prefs.containsKey('darkTheme')){
-    return await prefs.getBool('darkTheme');
+    return prefs.getBool('darkTheme');
   }
   else{
     return false;

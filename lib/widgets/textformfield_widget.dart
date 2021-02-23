@@ -8,7 +8,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final IconData prefixIconData;
   final IconData suffixIconData;
   final bool obscureText;
-  final bool focus;
+  final TextInputAction action;
   final Function onChanged;
   final Function validator;
 
@@ -18,7 +18,7 @@ class TextFormFieldWidget extends StatelessWidget {
       this.suffixIconData,
       this.obscureText,
       this.onChanged,
-      this.focus,
+      this.action,
       this.validator});
 
   @override
@@ -26,7 +26,8 @@ class TextFormFieldWidget extends StatelessWidget {
     final model = Provider.of<LoginModel>(context);
 
     return TextFormField(
-      autofocus: focus,
+      //autofocus: focus,
+      textInputAction: action,
       validator: validator,
       onChanged: onChanged,
       obscureText: obscureText,
@@ -36,21 +37,21 @@ class TextFormFieldWidget extends StatelessWidget {
         fontSize: 16.0,
       ),
       decoration: InputDecoration(
-        labelStyle: TextStyle(color: Global.dark, fontSize: 20.0),
+        labelStyle: TextStyle(color: Global.dark, fontSize: 18.0),
         focusColor: Global.focusedBlue,
         filled: true,
-        enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Global.dark, width: 1.3),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Global.extra_light, width: 1.3),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Global.focusedBlue, width: 1.3),
         ),
         labelText: hintText,
         prefixIcon: Icon(
           prefixIconData,
-          size: 30,
+          size: 25,
           color: Global.dark,
         ),
         suffixIcon: GestureDetector(
@@ -60,7 +61,7 @@ class TextFormFieldWidget extends StatelessWidget {
           child: Icon(
             suffixIconData,
             size: 20,
-            color: Global.light,
+            color: model.isVisible ? Global.dark : Global.light,
           ),
         ),
       ),

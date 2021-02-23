@@ -1,82 +1,76 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_project/data/database_helper.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project/models/globals.dart';
 import 'package:flutter_project/models/login_model.dart';
 import 'package:flutter_project/models/my_navigator.dart';
-import 'package:flutter_project/widgets/button_widget.dart';
+import 'package:flutter_project/widgets/rbutton_widget.dart';
 import 'package:flutter_project/widgets/textformfield_widget.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
+class Login2Page extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _Login2PageState createState() => _Login2PageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  // ignore: unused_field
-  DatabaseOperations _operations = new DatabaseOperations();
-  String name, pass;
+class _Login2PageState extends State<Login2Page> {
   bool checkVal = false;
   @override
   Widget build(BuildContext context) {
-    final sizeWidth = MediaQuery.of(context).size.width;
     final model = Provider.of<LoginModel>(context);
-    // ignore: unused_local_variable
+    final sizeWidth = MediaQuery.of(context).size.width;
+    final sizeHeigth = MediaQuery.of(context).size.height;
     final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return SafeArea(
       child: Scaffold(
+        //resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomPadding: false,
         backgroundColor: Global.white,
-        body: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Global.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+        body: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: SingleChildScrollView(
+                child: Container(
+                  //padding: EdgeInsets.only(left: sizeWidth * .05),
+                  color: Global.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                            'assets/images/logo_full_low_height.png',
+                            height: keyboardOpen ? 0 : 50),
+                      ),
+                      SizedBox(height: keyboardOpen ? 0 : sizeHeigth * .03),
+                      buildFormLogin2(model, context),
+                    ],
                   ),
-                ],
-              ),
-              width: sizeWidth * .5,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          children: [
-                            Image.asset(
-                              'assets/images/logo_full_low_height.png',
-                              height: 60,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  buildFormLogin(model, context),
-                ],
+                ),
               ),
             ),
-          ),
+            Expanded(
+              flex: 6,
+              child: SingleChildScrollView(
+                child: Container(
+                  color: Global.dark,
+                  child: Column(children: [
+                    Image.asset(
+                      'assets/images/home_right.png',
+                      height: sizeHeigth * .96,
+                    )
+                  ]),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Form buildFormLogin(LoginModel model, BuildContext context) {
+  Form buildFormLogin2(LoginModel model, BuildContext context) {
     return Form(
       key: model.formKey,
       // ignore: deprecated_member_use
@@ -116,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Text(
-                          'Remember Me?',
+                          'Keep me logged in?',
                           style: TextStyle(
                               color: Global.dark,
                               fontSize: 15,
@@ -142,38 +136,39 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 10.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ButtonWidget(
-                  onClick: (){
+                RButtonWidget(
+                  color: Global.focusedBlue,
+                  onClick: () {
                     if (model.formKey.currentState.validate()) {
                       model.formKey.currentState.save();
-                        MyNavigator.goToHome(context);//with arguments
-                        print('Sign in successfully'+model.uname);
-                        //setLogin(model.uname);
-                      } else {
-                        model.autoValidate = true;
-                        print('Failed to sign in');
-                        _showMyDialog(
-                          'Warning',
-                          'Username or password  is wrong.',
-                          'Or not registered in the system',
-                          'HELP',
-                          'OK',
-                          () {
-                            MyNavigator.gotoLoginHelp(context);
-                          },
-                        );
-                      }
+                      MyNavigator.goToHome(context); //with arguments
+                      print('Sign in successfully' + model.uname);
+                      //setLogin(model.uname);
+                    } else {
+                      model.autoValidate = true;
+                      print('Failed to sign in');
+                      _showMyDialog(
+                        'Warning',
+                        'Username or password  is wrong.',
+                        'Or not registered in the system',
+                        'HELP',
+                        'OK',
+                        () {
+                          MyNavigator.gotoLoginHelp(context);
+                        },
+                      );
+                    }
                   },
                   title: 'Login',
-                  hasBorder: false,
                 ),
                 SizedBox(
-                  width: 50.0,
+                  height: 10.0,
                 ),
-                ButtonWidget(
+                RButtonWidget(
+                  color: Global.medium,
                   onClick: () => _showMyDialog(
                     'Exit',
                     'Close the application.',
@@ -185,7 +180,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   title: 'Exit',
-                  hasBorder: true,
                 ),
               ],
             ),
@@ -197,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
 
   TextFormFieldWidget buildTextFormFieldWidgetUsername(LoginModel model) {
     return TextFormFieldWidget(
-      //focus: true,
+      action: TextInputAction.next,
       hintText: 'Username',
       obscureText: false,
       prefixIconData: Icons.person,
@@ -209,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
 
   TextFormFieldWidget buildTextFormFieldWidgetPass(LoginModel model) {
     return TextFormFieldWidget(
-      //focus: false,
+      action: TextInputAction.done,
       hintText: 'Password',
       obscureText: model.isVisible ? false : true,
       prefixIconData: Icons.lock,

@@ -17,16 +17,16 @@ class ButtonWidget extends StatelessWidget {
     return Material(
       child: Ink(
         height: 50.0,
-        width: MediaQuery.of(context).size.width*.200,
+        width: MediaQuery.of(context).size.width*.100,
         decoration: BoxDecoration(
           color: hasBorder ? Global.dark_red : Global.dark,
           borderRadius: BorderRadius.circular(10),
-          border: hasBorder
-              ? Border.all(
-                  color: Global.pink,
-                  width: 1.0,
-                )
-              : Border.fromBorderSide(BorderSide.none),
+          // border: hasBorder
+          //     ? Border.all(
+          //         color: Global.pink,
+          //         width: 1.0,
+          //       )
+          //     : Border.fromBorderSide(BorderSide.none),
         ),
         child: InkWell(
           onTap: onClick,

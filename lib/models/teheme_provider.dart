@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ThemeData light = ThemeData(
+  // textTheme: TextTheme(
+  //     headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+  //     headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+  //     bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+  //   ),
   brightness: Brightness.light,
   primarySwatch: Colors.indigo,
   accentColor: Colors.pink,
